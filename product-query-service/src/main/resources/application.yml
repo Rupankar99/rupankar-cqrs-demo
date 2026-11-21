@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: product-query-service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/product_db
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: product-service-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.value.default.type: com.rupankar.productqueryservice.dto.ProductEvent
+        spring.json.use.type.headers: false
+        spring.json.trusted.packages: "*"
+server:
+  port: 8080
